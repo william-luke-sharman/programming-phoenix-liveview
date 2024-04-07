@@ -24,27 +24,7 @@ defmodule PentoWeb.WrongLive do
             </.link>
         <% end %>
     </h2>
-    <br>
-    <h2>
-        <.link class="bg-blue-500 hover:bg-blue-700
-        text-white font-bold py-2 px-4 border border-blue-700 rounded m-1"
-        phx-click="restart" >
-            Restart
-        </.link>
-    </h2>
     """
-  end
-
-  def handle_event("restart", socket) do
-    {
-      :noreply,
-      push_patch(
-        socket,
-        score: 0,
-        message: "Coward!",
-        answer: answer()
-      )
-    }
   end
 
   def handle_event("guess", %{"number" => guess}, socket) when socket.assigns.answer == guess do
@@ -54,7 +34,8 @@ defmodule PentoWeb.WrongLive do
         socket,
         score: socket.assigns.score + 1,
         message: "You got it, way to go!",
-        time: time()
+        time: time(),
+        answer: answer()
       )
     }
   end
